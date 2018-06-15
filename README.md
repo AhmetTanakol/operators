@@ -1,3 +1,7 @@
+Name: Tanakol, Ahmet
+
+Matriculation number: 03691681
+
 # Operators
 
 Implement the following simplified physical operators by using the iterator model:

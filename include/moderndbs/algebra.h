@@ -6,6 +6,7 @@
 #include <ostream>
 #include <string>
 #include <vector>
+#include <experimental/optional>
 
 
 namespace moderndbs {
@@ -13,7 +14,8 @@ namespace iterator_model {
 
 class Register {
 private:
-    // TODO: add your implementation here
+    std::experimental::optional<int64_t> intValue;
+    std::experimental::optional<std::string> stringValue;
 
 public:
     enum class Type { INT64, CHAR16 };
@@ -126,8 +128,7 @@ public:
 class Print
 : public UnaryOperator {
 private:
-    // TODO: add your implementation here
-
+    std::ostream* stream;
 public:
     Print(Operator& input, std::ostream& stream);
 
@@ -144,8 +145,8 @@ public:
 class Projection
 : public UnaryOperator {
 private:
-    // TODO: add your implementation here
-
+    std::vector<size_t> attr_indexes;
+    std::vector<Register> output_regs;
 public:
     Projection(Operator& input, std::vector<size_t> attr_indexes);
 
@@ -162,6 +163,8 @@ public:
 class Select
 : public UnaryOperator {
 public:
+    enum class PrecidateAttribute { INT, CHAR, ATTRIBUTE };
+
     enum class PredicateType {
         EQ, // a == b
         NE, // a != b
@@ -199,8 +202,11 @@ public:
     };
 
 private:
-    // TODO: add your implementation here
-
+    PredicateAttributeInt64 intPredicate;
+    PredicateAttributeChar16 charPredicate;
+    PredicateAttributeAttribute attributePredicate;
+    PrecidateAttribute predicateAttribute;
+    std::vector<Register> output_regs;
 public:
     Select(Operator& input, PredicateAttributeInt64 predicate);
     Select(Operator& input, PredicateAttributeChar16 predicate);
@@ -227,12 +233,17 @@ public:
     };
 
 private:
-    // TODO: add your implementation here
+    std::vector<Criterion> criteria;
+    std::vector<std::vector<Register>> registers;
+    bool isMaterialized = false;
+    size_t current_index = 0;
 
 public:
     Sort(Operator& input, std::vector<Criterion> criteria);
 
     ~Sort() override;
+
+
 
     void open() override;
     bool next() override;
@@ -245,7 +256,14 @@ public:
 class HashJoin
 : public BinaryOperator {
 private:
-    // TODO: add your implementation here
+    size_t attr_index_left;
+    size_t attr_index_right;
+    bool step = true;
+    std::vector<std::vector<Register>> registers;
+    std::vector<Register*> left_regs;
+    std::vector<Register> right_regs;
+    size_t current_index = 0;
+    std::vector<Register> output_regs;
 
 public:
     HashJoin(
@@ -279,7 +297,13 @@ public:
     };
 
 private:
-    // TODO: add your implementation here
+    std::vector<size_t> group_by_attrs;
+    std::vector<AggrFunc> aggr_funcs;
+    std::vector<Register> output_regs;
+    bool isMaterialized = false;
+    int counter_index = 0;
+    int numberOfKeys = 0;
+    std::vector<std::vector<Register>> temp_sumcount_registers;
 
 public:
     HashAggregation(
@@ -301,7 +325,10 @@ public:
 class Union
 : public BinaryOperator {
 private:
-    // TODO: add your implementation here
+    std::vector<Register> output_regs;
+    std::vector<Register> registers;
+    bool isMaterialized = false;
+    int counter_index = 0;
 
 public:
     Union(Operator& input_left, Operator& input_right);
@@ -319,7 +346,10 @@ public:
 class UnionAll
 : public BinaryOperator {
 private:
-    // TODO: add your implementation here
+    std::vector<Register> output_regs;
+    std::vector<Register> registers;
+    bool isMaterialized = false;
+    int counter_index = 0;
 
 public:
     UnionAll(Operator& input_left, Operator& input_right);
@@ -337,7 +367,10 @@ public:
 class Intersect
 : public BinaryOperator {
 private:
-    // TODO: add your implementation here
+    std::vector<Register> output_regs;
+    std::vector<Register> registers;
+    bool isMaterialized = false;
+    int counter_index = 0;
 
 public:
     Intersect(Operator& input_left, Operator& input_right);
@@ -355,7 +388,10 @@ public:
 class IntersectAll
 : public BinaryOperator {
 private:
-    // TODO: add your implementation here
+    std::vector<Register> output_regs;
+    std::vector<Register> registers;
+    bool isMaterialized = false;
+    int counter_index = 0;
 
 public:
     IntersectAll(Operator& input_left, Operator& input_right);
@@ -373,7 +409,10 @@ public:
 class Except
 : public BinaryOperator {
 private:
-    // TODO: add your implementation here
+    std::vector<Register> output_regs;
+    std::vector<Register> registers;
+    bool isMaterialized = false;
+    int counter_index = 0;
 
 public:
     Except(Operator& input_left, Operator& input_right);
@@ -391,7 +430,10 @@ public:
 class ExceptAll
 : public BinaryOperator {
 private:
-    // TODO: add your implementation here
+    std::vector<Register> output_regs;
+    std::vector<Register> registers;
+    bool isMaterialized = false;
+    int counter_index = 0;
 
 public:
     ExceptAll(Operator& input_left, Operator& input_right);

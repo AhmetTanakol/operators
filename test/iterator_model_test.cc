@@ -478,7 +478,6 @@ TEST(IteratorModelTest, HashAggregationSumCount) {
     EXPECT_EQ(expected_output, sort_output(output.str()));
 }
 
-
 // NOLINTNEXTLINE
 TEST(AdvancedIteratorModelTest, Union) {
     TestTupleSource source_left{relation_set_a};
@@ -505,7 +504,6 @@ TEST(AdvancedIteratorModelTest, Union) {
     );
     EXPECT_EQ(expected_output, sort_output(output.str()));
 }
-
 
 // NOLINTNEXTLINE
 TEST(AdvancedIteratorModelTest, UnionAll) {
@@ -541,7 +539,6 @@ TEST(AdvancedIteratorModelTest, UnionAll) {
     EXPECT_EQ(expected_output, sort_output(output.str()));
 }
 
-
 // NOLINTNEXTLINE
 TEST(BonusIteratorModelTest, Intersect) {
     TestTupleSource source_left{relation_set_a};
@@ -566,7 +563,6 @@ TEST(BonusIteratorModelTest, Intersect) {
     );
     EXPECT_EQ(expected_output, sort_output(output.str()));
 }
-
 
 // NOLINTNEXTLINE
 TEST(BonusIteratorModelTest, IntersectAll) {
@@ -593,7 +589,6 @@ TEST(BonusIteratorModelTest, IntersectAll) {
     );
     EXPECT_EQ(expected_output, sort_output(output.str()));
 }
-
 
 // NOLINTNEXTLINE
 TEST(BonusIteratorModelTest, Except) {
