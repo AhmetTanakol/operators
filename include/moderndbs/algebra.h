@@ -235,6 +235,7 @@ public:
 private:
     std::vector<Criterion> criteria;
     std::vector<std::vector<Register>> registers;
+    std::vector<Register> output_regs;
     bool isMaterialized = false;
     size_t current_index = 0;
 
@@ -258,11 +259,9 @@ class HashJoin
 private:
     size_t attr_index_left;
     size_t attr_index_right;
-    bool step = true;
+    bool isMaterialized = false;
     std::vector<std::vector<Register>> registers;
-    std::vector<Register*> left_regs;
-    std::vector<Register> right_regs;
-    size_t current_index = 0;
+    int current_index = 0;
     std::vector<Register> output_regs;
 
 public:

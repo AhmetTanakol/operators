@@ -258,6 +258,7 @@ namespace moderndbs {
 
         bool Select::next() {
             if (this->input->next()) {
+                this->output_regs.clear();
                 std::vector<Register*> regs = this->input->get_output();
                 switch (this->predicateAttribute) {
                     case PrecidateAttribute::INT :
@@ -267,7 +268,7 @@ namespace moderndbs {
                                 auto& intReg = regs[this->intPredicate.attr_index];
                                 Register int_reg = Register::from_int(this->intPredicate.constant);
                                 if (*intReg == int_reg) {
-                                    for (auto r : regs) {
+                                    for (auto& r : regs) {
                                         this->output_regs.push_back(*r);
                                     }
                                 }
@@ -278,7 +279,7 @@ namespace moderndbs {
                                 auto& intReg = regs[this->intPredicate.attr_index];
                                 Register int_reg = Register::from_int(this->intPredicate.constant);
                                 if (*intReg != int_reg) {
-                                    for (auto r : regs) {
+                                    for (auto& r : regs) {
                                         this->output_regs.push_back(*r);
                                     }
                                 }
@@ -289,7 +290,7 @@ namespace moderndbs {
                                 auto& intReg = regs[this->intPredicate.attr_index];
                                 Register int_reg = Register::from_int(this->intPredicate.constant);
                                 if (*intReg < int_reg) {
-                                    for (auto r : regs) {
+                                    for (auto& r : regs) {
                                         this->output_regs.push_back(*r);
                                     }
                                 }
@@ -300,7 +301,7 @@ namespace moderndbs {
                                 auto& intReg = regs[this->intPredicate.attr_index];
                                 Register int_reg = Register::from_int(this->intPredicate.constant);
                                 if (*intReg <= int_reg) {
-                                    for (auto r : regs) {
+                                    for (auto& r : regs) {
                                         this->output_regs.push_back(*r);
                                     }
                                 }
@@ -311,7 +312,7 @@ namespace moderndbs {
                                 auto& intReg = regs[this->intPredicate.attr_index];
                                 Register int_reg = Register::from_int(this->intPredicate.constant);
                                 if (*intReg > int_reg) {
-                                    for (auto r : regs) {
+                                    for (auto& r : regs) {
                                         this->output_regs.push_back(*r);
                                     }
                                 }
@@ -322,7 +323,7 @@ namespace moderndbs {
                                 auto& intReg = regs[this->intPredicate.attr_index];
                                 Register int_reg = Register::from_int(this->intPredicate.constant);
                                 if (*intReg >= int_reg) {
-                                    for (auto r : regs) {
+                                    for (auto& r : regs) {
                                         this->output_regs.push_back(*r);
                                     }
                                 }
@@ -336,7 +337,7 @@ namespace moderndbs {
                                 auto& stringReg = regs[this->charPredicate.attr_index];
                                 Register str_reg = Register::from_string(this->charPredicate.constant);
                                 if (*stringReg == str_reg) {
-                                    for (auto r : regs) {
+                                    for (auto& r : regs) {
                                         this->output_regs.push_back(*r);
                                     }
                                 }
@@ -347,7 +348,7 @@ namespace moderndbs {
                                 auto& stringReg = regs[this->charPredicate.attr_index];
                                 Register str_reg = Register::from_string(this->charPredicate.constant);
                                 if (*stringReg != str_reg) {
-                                    for (auto r : regs) {
+                                    for (auto& r : regs) {
                                         this->output_regs.push_back(*r);
                                     }
                                 }
@@ -358,7 +359,7 @@ namespace moderndbs {
                                 auto& stringReg = regs[this->charPredicate.attr_index];
                                 Register str_reg = Register::from_string(this->charPredicate.constant);
                                 if (*stringReg < str_reg) {
-                                    for (auto r : regs) {
+                                    for (auto& r : regs) {
                                         this->output_regs.push_back(*r);
                                     }
                                 }
@@ -369,7 +370,7 @@ namespace moderndbs {
                                 auto& stringReg = regs[this->charPredicate.attr_index];
                                 Register str_reg = Register::from_string(this->charPredicate.constant);
                                 if (*stringReg <= str_reg) {
-                                    for (auto r : regs) {
+                                    for (auto& r : regs) {
                                         this->output_regs.push_back(*r);
                                     }
                                 }
@@ -380,7 +381,7 @@ namespace moderndbs {
                                 auto& stringReg = regs[this->charPredicate.attr_index];
                                 Register str_reg = Register::from_string(this->charPredicate.constant);
                                 if (*stringReg > str_reg) {
-                                    for (auto r : regs) {
+                                    for (auto& r : regs) {
                                         this->output_regs.push_back(*r);
                                     }
                                 }
@@ -391,7 +392,7 @@ namespace moderndbs {
                                 auto& stringReg = regs[this->charPredicate.attr_index];
                                 Register str_reg = Register::from_string(this->charPredicate.constant);
                                 if (*stringReg >= str_reg) {
-                                    for (auto r : regs) {
+                                    for (auto& r : regs) {
                                         this->output_regs.push_back(*r);
                                     }
                                 }
@@ -405,7 +406,7 @@ namespace moderndbs {
                                 Register* leftReg = regs[this->attributePredicate.attr_left_index];
                                 Register* rightReg = regs[this->attributePredicate.attr_right_index];
                                 if (*leftReg == *rightReg) {
-                                    for (auto r : regs) {
+                                    for (auto& r : regs) {
                                         this->output_regs.push_back(*r);
                                     }
                                 }
@@ -416,7 +417,7 @@ namespace moderndbs {
                                 Register* leftReg = regs[this->attributePredicate.attr_left_index];
                                 Register* rightReg = regs[this->attributePredicate.attr_right_index];
                                 if (*leftReg != *rightReg) {
-                                    for (auto r : regs) {
+                                    for (auto& r : regs) {
                                         this->output_regs.push_back(*r);
                                     }
                                 }
@@ -427,7 +428,7 @@ namespace moderndbs {
                                 Register* leftReg = regs[this->attributePredicate.attr_left_index];
                                 Register* rightReg = regs[this->attributePredicate.attr_right_index];
                                 if (*leftReg < *rightReg) {
-                                    for (auto r : regs) {
+                                    for (auto& r : regs) {
                                         this->output_regs.push_back(*r);
                                     }
                                 }
@@ -438,7 +439,7 @@ namespace moderndbs {
                                 Register* leftReg = regs[this->attributePredicate.attr_left_index];
                                 Register* rightReg = regs[this->attributePredicate.attr_right_index];
                                 if (*leftReg <= *rightReg) {
-                                    for (auto r : regs) {
+                                    for (auto& r : regs) {
                                         this->output_regs.push_back(*r);
                                     }
                                 }
@@ -449,7 +450,7 @@ namespace moderndbs {
                                 Register* leftReg = regs[this->attributePredicate.attr_left_index];
                                 Register* rightReg = regs[this->attributePredicate.attr_right_index];
                                 if (*leftReg > *rightReg) {
-                                    for (auto r : regs) {
+                                    for (auto& r : regs) {
                                         this->output_regs.push_back(*r);
                                     }
                                 }
@@ -460,7 +461,7 @@ namespace moderndbs {
                                 Register* leftReg = regs[this->attributePredicate.attr_left_index];
                                 Register* rightReg = regs[this->attributePredicate.attr_right_index];
                                 if (*leftReg >= *rightReg) {
-                                    for (auto r : regs) {
+                                    for (auto& r : regs) {
                                         this->output_regs.push_back(*r);
                                     }
                                 }
@@ -484,7 +485,6 @@ namespace moderndbs {
             for (auto& reg : this->output_regs) {
                 output.push_back(&reg);
             }
-            this->output_regs.clear();
             return output;
         }
 
@@ -504,6 +504,7 @@ namespace moderndbs {
 
 
         bool Sort::next() {
+            this->output_regs.clear();
             if (!this->isMaterialized) {
                 while (this->input->next()) {
                     std::vector<Register*> regs = this->input->get_output();
@@ -525,6 +526,11 @@ namespace moderndbs {
                 this->isMaterialized = true;
             }
             if (this->current_index < this->registers.size()) {
+                auto regs = this->registers[this->current_index];
+                for (auto& r : regs) {
+                    this->output_regs.push_back(r);
+                }
+                ++this->current_index;
                 return true;
             }
             return false;
@@ -533,10 +539,8 @@ namespace moderndbs {
 
         std::vector<Register*> Sort::get_output() {
             std::vector<Register*> output;
-            auto regs = this->registers[this->current_index];
-            output.reserve(regs.size());
-            ++this->current_index;
-            for (auto& reg : regs) {
+            output.reserve(this->output_regs.size());
+            for (auto& reg : this->output_regs) {
                 output.push_back(&reg);
             }
             return output;
@@ -567,47 +571,83 @@ namespace moderndbs {
             this->input_right->open();
         }
 
-        /// I know that I should insert left and right tuples into hash tables
-        /// then for each item in left hash table I have to check whether that key exists
-        /// in right hash table if yes, add all elements in register vector from both left
-        /// and right has table into output_regs.
-        /// However unordered_set was always empty after each insert and I was not getting any error
-        /// I couldn't understand the problem
         bool HashJoin::next() {
-            while (this->input_right->next()) {
-                std::vector<Register> regs;
-                for (auto& reg : this->input_right->get_output()) {
-                    regs.push_back(*reg);
-                }
-                this->registers.push_back(regs);
-            }
-            while(true) {
-                if (this->step) {
-                    if (this->input_left->next()) {
-                        this->left_regs = this->input_left->get_output();
-                        this->step = false;
-                    } else {
-                        return false;
+            this->output_regs.clear();
+            if (!this->isMaterialized) {
+                std::unordered_set<std::vector<Register>, RegisterVectorHasher> left_set;
+                std::unordered_set<std::vector<Register>, RegisterVectorHasher> right_set;
+                while (this->input_left->next()) {
+                    std::vector<Register> regs;
+                    for (auto& reg : this->input_left->get_output()) {
+                        regs.push_back(*reg);
                     }
+                    left_set.insert(regs);
                 }
-                if (this->current_index < this->registers.size()) {
-                    this->right_regs = this->registers[this->current_index];
-                    if (*this->left_regs[this->attr_index_left] == this->right_regs[this->attr_index_right]) {
-                        for (auto& reg : this->left_regs) {
-                            this->output_regs.push_back(*reg);
-                        }
-                        for (auto& reg : this->right_regs) {
-                            this->output_regs.push_back(reg);
-                        }
+                /*std::cout << "left side" << std::endl;
+                for (auto it : left_set) {
+                    for (auto r : it) {
+                        std::cout << " " << r.get_hash() << ",";
                     }
-                    ++this->current_index;
-                    return true;
+                    std::cout << std::endl;
                 }
-                this->current_index = 0;
-                step = true;
-            }
-        }
+                std::cout << '\n';
+                std::cout << '\n' << "left side end" << std::endl;*/
+                while (this->input_right->next()) {
+                    std::vector<Register> regs;
+                    for (auto& reg : this->input_right->get_output()) {
+                        regs.push_back(*reg);
+                    }
+                    right_set.insert(regs);
+                }
+                /*std::cout << "right side" << std::endl;
+                for (auto it : right_set) {
+                    for (auto r : it) {
+                        std::cout << " " << r.get_hash() << ",";
+                    }
+                    std::cout << std::endl;
+                }
+                std::cout << '\n';
+                std::cout << "right side end" << std::endl;*/
 
+                for (auto left_it : left_set) {
+                    for (auto right_it : right_set) {
+                        if (left_it[this->attr_index_left] == right_it[this->attr_index_right]) {
+                            std::vector<Register> temp_vec;
+                            temp_vec.insert( temp_vec.end(), left_it.begin(), left_it.end() );
+                            temp_vec.insert( temp_vec.end(), right_it.begin(), right_it.end() );
+                            this->registers.push_back(temp_vec);
+                        }
+                    }
+                }
+
+                std::sort(this->registers.begin(), this->registers.end(),
+                          [](const std::vector<Register>& regs1, const std::vector<Register>& regs2) {
+                              return regs1[0] < regs2[0];
+                          });
+                /*std::cout << "registers" << std::endl;
+                for (auto it : this->registers) {
+                    for (auto r : it) {
+                        if (r.get_type() == Register::Type::INT64) {
+                            std::cout << " " << r.as_int() << ",";
+                        } else {
+                            std::cout << " " << r.as_string() << ",";
+                        }
+                    }
+                    std::cout << std::endl;
+                }
+                std::cout << '\n';
+                std::cout << '\n' << "registers end" << std::endl;*/
+
+                this->isMaterialized = true;
+            }
+            if (this->current_index < static_cast<int>(this->registers.size())) {
+                this->output_regs = this->registers[this->current_index];
+                ++this->current_index;
+                return true;
+            }
+            return false;
+
+        }
 
         void HashJoin::close() {
             this->input_left->close();
@@ -620,7 +660,6 @@ namespace moderndbs {
             for (auto& reg : this->output_regs) {
                 output.push_back(&reg);
             }
-            this->output_regs.clear();
             return output;
         }
 
@@ -644,6 +683,7 @@ namespace moderndbs {
 
 
         bool HashAggregation::next() {
+            this->output_regs.clear();
             std::experimental::optional<Register> minRegister;
             std::experimental::optional<Register> maxRegister;
             std::unordered_map<Register, int, RegisterHasher> countMap;
@@ -746,7 +786,6 @@ namespace moderndbs {
             for (auto& reg : this->output_regs) {
                 output.push_back(&reg);
             }
-            this->output_regs.clear();
             return output;
         }
 
