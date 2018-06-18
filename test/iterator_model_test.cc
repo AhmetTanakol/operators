@@ -394,7 +394,21 @@ TEST(IteratorModelTest, Sort) {
     EXPECT_EQ(expected_output, output.str());
 }
 
+/*
+ * const std::vector<std::tuple<int64_t, std::string>> relation_students{
+    {24002, "Xenokrates      "},
+    {26120, "Fichte          "},
+    {29555, "Feuerbach       "},
+};
 
+
+const std::vector<std::tuple<int64_t, int64_t, int64_t>> relation_grades{
+    {24002, 5001, 1},
+    {24002, 5041, 2},
+    {29555, 4630, 2},
+};
+
+ */
 // NOLINTNEXTLINE
 TEST(IteratorModelTest, HashJoin) {
     TestTupleSource source_students{relation_students};

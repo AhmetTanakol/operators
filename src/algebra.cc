@@ -574,14 +574,14 @@ namespace moderndbs {
         bool HashJoin::next() {
             this->output_regs.clear();
             if (!this->isMaterialized) {
-                std::unordered_set<std::vector<Register>, RegisterVectorHasher> left_set;
-                std::unordered_set<std::vector<Register>, RegisterVectorHasher> right_set;
+                std::unordered_map<Register, std::vector<Register>, RegisterVectorHasher> left_set;
+                std::unordered_set<Register, std::vector<Register>, RegisterVectorHasher> right_set;
                 while (this->input_left->next()) {
                     std::vector<Register> regs;
                     for (auto& reg : this->input_left->get_output()) {
                         regs.push_back(*reg);
                     }
-                    left_set.insert(regs);
+                    left_set.insert({regs[this->attr_index_left], regs});
                 }
                 /*std::cout << "left side" << std::endl;
                 for (auto it : left_set) {
@@ -597,7 +597,7 @@ namespace moderndbs {
                     for (auto& reg : this->input_right->get_output()) {
                         regs.push_back(*reg);
                     }
-                    right_set.insert(regs);
+                    left_set.insert({regs[this->attr_index_right], regs});
                 }
                 /*std::cout << "right side" << std::endl;
                 for (auto it : right_set) {
@@ -610,13 +610,17 @@ namespace moderndbs {
                 std::cout << "right side end" << std::endl;*/
 
                 for (auto left_it : left_set) {
-                    for (auto right_it : right_set) {
-                        if (left_it[this->attr_index_left] == right_it[this->attr_index_right]) {
-                            std::vector<Register> temp_vec;
-                            temp_vec.insert( temp_vec.end(), left_it.begin(), left_it.end() );
-                            temp_vec.insert( temp_vec.end(), right_it.begin(), right_it.end() );
-                            this->registers.push_back(temp_vec);
-                        }
+                    auto got = right_set.find(left_it.first);
+                    if (got == right_set.end()) {
+                        registers_map.insert({*it, 1});
+                    } else {
+                        registers_map[*it] += 1;
+                    }
+                    if (left_it.first == right_se) {
+                        std::vector<Register> temp_vec;
+                        temp_vec.insert( temp_vec.end(), left_it.begin(), left_it.end() );
+                        temp_vec.insert( temp_vec.end(), right_it.begin(), right_it.end() );
+                        this->registers.push_back(temp_vec);
                     }
                 }
 
