@@ -394,21 +394,6 @@ TEST(IteratorModelTest, Sort) {
     EXPECT_EQ(expected_output, output.str());
 }
 
-/*
- * const std::vector<std::tuple<int64_t, std::string>> relation_students{
-    {24002, "Xenokrates      "},
-    {26120, "Fichte          "},
-    {29555, "Feuerbach       "},
-};
-
-
-const std::vector<std::tuple<int64_t, int64_t, int64_t>> relation_grades{
-    {24002, 5001, 1},
-    {24002, 5041, 2},
-    {29555, 4630, 2},
-};
-
- */
 // NOLINTNEXTLINE
 TEST(IteratorModelTest, HashJoin) {
     TestTupleSource source_students{relation_students};
@@ -519,6 +504,12 @@ TEST(AdvancedIteratorModelTest, Union) {
     EXPECT_EQ(expected_output, sort_output(output.str()));
 }
 
+/*
+ * const std::vector<std::tuple<int64_t>> relation_set_a{{1, 1, 2, 3, 3, 3}};
+const std::vector<std::tuple<int64_t>> relation_set_b{{2, 4, 4, 3, 3}};
+
+ */
+
 // NOLINTNEXTLINE
 TEST(AdvancedIteratorModelTest, UnionAll) {
     TestTupleSource source_left{relation_set_a};
@@ -578,6 +569,12 @@ TEST(BonusIteratorModelTest, Intersect) {
     EXPECT_EQ(expected_output, sort_output(output.str()));
 }
 
+/*
+ * const std::vector<std::tuple<int64_t>> relation_set_a{{1, 1, 2, 3, 3, 3}};
+const std::vector<std::tuple<int64_t>> relation_set_b{{2, 4, 4, 3, 3}};
+
+ */
+
 // NOLINTNEXTLINE
 TEST(BonusIteratorModelTest, IntersectAll) {
     TestTupleSource source_left{relation_set_a};
@@ -604,6 +601,11 @@ TEST(BonusIteratorModelTest, IntersectAll) {
     EXPECT_EQ(expected_output, sort_output(output.str()));
 }
 
+/*
+ * const std::vector<std::tuple<int64_t>> relation_set_a{{1, 1, 2, 3, 3, 3}};
+const std::vector<std::tuple<int64_t>> relation_set_b{{2, 4, 4, 3, 3}};
+
+ */
 // NOLINTNEXTLINE
 TEST(BonusIteratorModelTest, Except) {
     TestTupleSource source_left{relation_set_a};
@@ -628,7 +630,11 @@ TEST(BonusIteratorModelTest, Except) {
     EXPECT_EQ(expected_output, sort_output(output.str()));
 }
 
+/*
+ * const std::vector<std::tuple<int64_t>> relation_set_a{{1, 1, 2, 3, 3, 3}};
+const std::vector<std::tuple<int64_t>> relation_set_b{{2, 4, 4, 3, 3}};
 
+ */
 // NOLINTNEXTLINE
 TEST(BonusIteratorModelTest, ExceptAll) {
     TestTupleSource source_left{relation_set_a};
